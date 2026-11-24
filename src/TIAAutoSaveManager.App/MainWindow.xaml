@@ -1,0 +1,107 @@
+<Window x:Class="TIAAutoSaveManager.App.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:TIAAutoSaveManager.App"
+ Title="TIA Portal Auto Save Manager" Width="1240" Height="860" MinWidth="760" MinHeight="520" WindowStartupLocation="CenterScreen" Style="{StaticResource {x:Type Window}}">
+ <TabControl x:Name="MainSections" Background="{StaticResource BackgroundBrush}" BorderThickness="0" Padding="0" ItemContainerStyle="{StaticResource NavigationTab}">
+ <TabControl.ItemsPanel><ItemsPanelTemplate><DockPanel LastChildFill="False"/></ItemsPanelTemplate></TabControl.ItemsPanel>
+ <TabControl.Template><ControlTemplate TargetType="TabControl"><Grid Background="{TemplateBinding Background}" KeyboardNavigation.TabNavigation="Local"><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions><ItemsPresenter KeyboardNavigation.TabIndex="1"/><ContentPresenter x:Name="PART_SelectedContentHost" Grid.Row="1" ContentSource="SelectedContent" KeyboardNavigation.TabIndex="2"/></Grid></ControlTemplate></TabControl.Template>
+ <TabItem Header="Yönetim">
+ <ScrollViewer x:Name="PageScroll" Foreground="{StaticResource TextBrush}" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" CanContentScroll="False">
+ <Grid x:Name="PageContent" Margin="24,22">
+  <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+  <Grid x:Name="HeaderGrid">
+   <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+   <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+   <Grid><Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition/></Grid.ColumnDefinitions><Border CornerRadius="10" Margin="0,0,16,0" VerticalAlignment="Center"><Image Source="Assets/Logo.png" Width="64" Height="64" Stretch="Uniform"/></Border>
+    <StackPanel Grid.Column="1">
+    <TextBlock Text="TIA PORTAL / V20 + V21" Foreground="{StaticResource AccentBrush}" FontSize="12" FontWeight="Bold"/>
+    <TextBlock Text="Auto Save Manager" FontSize="30" FontWeight="SemiBold" Margin="0,6,0,4"/>
+    <TextBlock Text="Seçtiğiniz projeleri kaydedin. Tarihli .zap20/.zap21 yedekleriyle geçmişinizi koruyun." Style="{StaticResource Muted}"/>
+   </StackPanel>
+   </Grid>
+   <Border x:Name="VersionBadge" Grid.Column="1" Background="#19352F" CornerRadius="6" Padding="13,8" VerticalAlignment="Top" Margin="0,9,0,0"><TextBlock Text="V0.4.3 · AUTO SAVE + BACKUP" Foreground="{StaticResource AccentBrush}" FontSize="11" FontWeight="Bold"/></Border>
+  </Grid>
+  <Grid x:Name="SummaryGrid" Grid.Row="1" Margin="0,23,0,20">
+   <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="16"/><ColumnDefinition/><ColumnDefinition Width="16"/><ColumnDefinition Width="1.5*"/></Grid.ColumnDefinitions>
+   <Border Style="{StaticResource Card}" Padding="19,14"><StackPanel><TextBlock Text="ALGILANAN INSTANCE" Style="{StaticResource Muted}" FontSize="11"/><TextBlock Text="{Binding InstanceCount}" FontSize="28" FontWeight="SemiBold" Margin="0,4,0,0"/></StackPanel></Border>
+   <Border Grid.Column="2" Style="{StaticResource Card}" Padding="19,14"><StackPanel><TextBlock Text="BAĞLI INSTANCE" Style="{StaticResource Muted}" FontSize="11"/><TextBlock Text="{Binding ConnectedCount}" FontSize="28" Foreground="{StaticResource AccentBrush}" FontWeight="SemiBold" Margin="0,4,0,0"/></StackPanel></Border>
+   <Border Grid.Column="4" Style="{StaticResource Card}" Padding="19,14"><StackPanel><TextBlock Text="AUTO SAVE / BACKUP" Style="{StaticResource Muted}" FontSize="11"/><TextBlock Text="{Binding AutomationSummary}" FontSize="23" FontWeight="SemiBold" Margin="0,4,0,2"/><TextBlock Text="{Binding AutomationDetail}" Style="{StaticResource Muted}" FontSize="11"/></StackPanel></Border>
+  </Grid>
+  <Grid x:Name="BodyGrid" Grid.Row="2">
+   <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+   <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="20"/><ColumnDefinition Width="300"/></Grid.ColumnDefinitions>
+   <Grid x:Name="LeftPanels">
+    <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="16"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+    <Border x:Name="InstancesCard" Style="{StaticResource Card}" Padding="20,18">
+     <Grid>
+      <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+      <Grid><TextBlock Text="TIA Portal instance’ları" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center"/><Button Content="↻  Yenile" Command="{Binding RefreshCommand}" HorizontalAlignment="Right" Padding="12,8"/></Grid>
+      <Grid Grid.Row="1" Margin="12,18,12,9"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="52"/><ColumnDefinition Width="62"/><ColumnDefinition Width="106"/><ColumnDefinition Width="80"/><ColumnDefinition Width="90"/></Grid.ColumnDefinitions><TextBlock Text="PROJE" Style="{StaticResource Muted}" FontSize="10"/><TextBlock Grid.Column="1" Text="SÜRÜM" Style="{StaticResource Muted}" FontSize="10"/><TextBlock Grid.Column="2" Text="PID" Style="{StaticResource Muted}" FontSize="10"/><TextBlock Grid.Column="3" Text="DURUM" Style="{StaticResource Muted}" FontSize="10"/><TextBlock Grid.Column="4" Text="SON KAYIT" Style="{StaticResource Muted}" FontSize="10"/><TextBlock Grid.Column="5" Text="AUTO / SONRAKİ" Style="{StaticResource Muted}" FontSize="10"/></Grid>
+      <Grid Grid.Row="2" Height="110">
+       <TextBlock Text="Instance listesi boş.&#x0a;TIA Portal’da bir test projesi açıp Yenile seçin." HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center">
+        <TextBlock.Style><Style TargetType="TextBlock" BasedOn="{StaticResource Muted}"><Setter Property="Visibility" Value="Collapsed"/><Style.Triggers><DataTrigger Binding="{Binding Portals.Count}" Value="0"><Setter Property="Visibility" Value="Visible"/></DataTrigger></Style.Triggers></Style></TextBlock.Style>
+       </TextBlock>
+       <ListBox ItemsSource="{Binding Portals}" SelectedItem="{Binding Selected}" Background="Transparent" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+        <ListBox.ItemContainerStyle><Style TargetType="ListBoxItem"><Setter Property="HorizontalContentAlignment" Value="Stretch"/><Setter Property="Foreground" Value="{StaticResource TextBrush}"/><Setter Property="Margin" Value="0,2"/><Setter Property="Padding" Value="12,11"/><Setter Property="Template"><Setter.Value><ControlTemplate TargetType="ListBoxItem"><Border x:Name="ItemBorder" CornerRadius="6" Padding="{TemplateBinding Padding}" Background="#101927"><ContentPresenter/></Border><ControlTemplate.Triggers><Trigger Property="IsSelected" Value="True"><Setter TargetName="ItemBorder" Property="Background" Value="#27443F"/></Trigger><Trigger Property="IsMouseOver" Value="True"><Setter TargetName="ItemBorder" Property="Opacity" Value="0.8"/></Trigger></ControlTemplate.Triggers></ControlTemplate></Setter.Value></Setter></Style></ListBox.ItemContainerStyle>
+        <ListBox.ItemTemplate><DataTemplate><Grid ToolTip="{Binding Message}"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="52"/><ColumnDefinition Width="62"/><ColumnDefinition Width="106"/><ColumnDefinition Width="80"/><ColumnDefinition Width="90"/></Grid.ColumnDefinitions><TextBlock Text="{Binding ProjectName}" TextTrimming="CharacterEllipsis" Margin="0,0,10,0"/><TextBlock Grid.Column="1" Text="{Binding Version}"/><TextBlock Grid.Column="2" Text="{Binding Pid}"/><TextBlock Grid.Column="3" Text="{Binding State}" Foreground="{StaticResource AccentBrush}"/><TextBlock Grid.Column="4" Text="{Binding LastSaved}"/><StackPanel Grid.Column="5"><TextBlock Text="{Binding AutoMode}" FontSize="10" Foreground="{StaticResource AccentBrush}"/><TextBlock Text="{Binding NextSave}" FontSize="11"/></StackPanel></Grid></DataTemplate></ListBox.ItemTemplate>
+       </ListBox>
+      </Grid>
+      <StackPanel Grid.Row="3" Margin="0,10,0,10"><TextBlock Text="{Binding SelectedPath}" TextTrimming="CharacterEllipsis" ToolTip="{Binding SelectedPath}" Foreground="{StaticResource MutedBrush}" FontSize="11"/><TextBlock Text="{Binding SelectedSchedule}" Foreground="{StaticResource AccentBrush}" FontSize="12" Margin="0,6,0,0"/></StackPanel>
+      <WrapPanel x:Name="ActionBar" Grid.Row="4"><Button Content="Bağlan" Command="{Binding ConnectCommand}" Margin="0,0,7,4" Padding="12,10"/><Button Content="Save Now" Command="{Binding SaveCommand}" Background="{StaticResource AccentBrush}" Foreground="#10231F" Margin="0,0,7,4" Padding="12,10"/><Button Content="Backup Now" Command="{Binding BackupCommand}" Margin="0,0,7,4" Padding="12,10"/><Button Content="{Binding PauseLabel}" Command="{Binding PauseCommand}" Margin="0,0,7,4" Padding="12,10"/><Button Content="Bağlantıları bırak" Command="{Binding DisconnectCommand}" Margin="0,0,0,4" Padding="12,10"/></WrapPanel>
+     </Grid>
+    </Border>
+    <Border Grid.Row="2" Style="{StaticResource Card}" Padding="20,17">
+     <Grid><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions><Grid><TextBlock Text="İşlem geçmişi" FontSize="17" FontWeight="SemiBold"/><Button Content="Log klasörü ↗" Command="{Binding OpenLogsCommand}" HorizontalAlignment="Right" Padding="10,6" FontSize="11"/></Grid>
+      <ListBox Grid.Row="1" ItemsSource="{Binding Events}" Background="Transparent" BorderThickness="0" Foreground="{StaticResource MutedBrush}" Margin="0,12,0,0" ScrollViewer.HorizontalScrollBarVisibility="Disabled"><ListBox.ItemTemplate><DataTemplate><TextBlock Text="{Binding}" FontFamily="Consolas" FontSize="11" Foreground="{StaticResource MutedBrush}" TextWrapping="Wrap" Margin="0,3"/></DataTemplate></ListBox.ItemTemplate></ListBox>
+     </Grid>
+    </Border>
+   </Grid>
+   <Border x:Name="Sidebar" Grid.Column="2" Style="{StaticResource Card}" Padding="15,15">
+    <TabControl x:Name="AutomationTabs" Background="{StaticResource PanelBrush}" BorderThickness="0" Foreground="{StaticResource TextBrush}">
+     <TabControl.Resources><Style TargetType="TabItem"><Setter Property="Foreground" Value="{StaticResource MutedBrush}"/><Setter Property="Template"><Setter.Value><ControlTemplate TargetType="TabItem"><Border x:Name="Tab" Background="Transparent" CornerRadius="6,6,0,0" Padding="15,10"><ContentPresenter ContentSource="Header"/></Border><ControlTemplate.Triggers><Trigger Property="IsSelected" Value="True"><Setter TargetName="Tab" Property="Background" Value="#243248"/><Setter Property="Foreground" Value="{StaticResource AccentBrush}"/></Trigger></ControlTemplate.Triggers></ControlTemplate></Setter.Value></Setter></Style></TabControl.Resources>
+     <TabItem Header="Otomatik">
+      <ScrollViewer Foreground="{StaticResource TextBrush}" VerticalScrollBarVisibility="Auto" Margin="4,15,0,0"><StackPanel Margin="0,0,8,0">
+       <TextBlock Text="Seçili proje" FontSize="18" FontWeight="SemiBold"/>
+       <Button Content="{Binding AutoSaveLabel}" Command="{Binding ToggleAutoSaveCommand}" Margin="0,14,0,8" Padding="10,10"/>
+       <Button Content="{Binding AutoBackupLabel}" Command="{Binding ToggleBackupCommand}" Margin="0,0,0,13" Padding="10,10"/>
+       <TextBlock Text="{Binding SelectedSchedule}" Style="{StaticResource Muted}" FontSize="12" LineHeight="20"/>
+       <TextBlock Text="SON BAŞARILI BACKUP" Style="{StaticResource Muted}" FontSize="10" Margin="0,20,0,5"/>
+       <TextBlock Text="{Binding LastBackupText}" FontSize="12"/>
+       <TextBlock Text="{Binding AppliedBackupDirectory}" Style="{StaticResource Muted}" FontSize="11" Margin="0,14,0,0"/>
+       <Button Content="Yedek klasörünü aç ↗" Command="{Binding OpenBackupFolderCommand}" FontSize="11" Padding="10,8" Margin="0,14,0,18"/>
+       <Border Height="1" Background="{StaticResource BorderBrush}"/>
+       <TextBlock Text="Kayıt ve yedekleme" Foreground="#F3CB80" FontSize="15" FontWeight="SemiBold" Margin="0,18,0,8"/>
+       <TextBlock Text="Save mevcut projeyi kaydeder. Backup önce Save yapar, ardından tarihli .zap20/.zap21 oluşturur. Save Undo/Redo geçmişini temizler." Style="{StaticResource Muted}" FontSize="12" LineHeight="19"/>
+       <TextBlock Text="Her projeyi ayrı etkinleştirin. Yeniden açılışta otomatik işlemler kapalı başlar." Style="{StaticResource Muted}" FontSize="12" LineHeight="19" Margin="0,12,0,0"/>
+      </StackPanel></ScrollViewer>
+     </TabItem>
+     <TabItem Header="Ayarlar">
+      <Grid Margin="4,15,0,0" TextElement.Foreground="{StaticResource TextBrush}"><Grid.RowDefinitions><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+      <StackPanel Grid.Row="1" Margin="0,10,0,0"><Button Content="Ayarları kaydet" Command="{Binding SaveSettingsCommand}"/><TextBlock Text="Değişiklikleri kaydedin; sonra Otomatik sekmesinden projeyi etkinleştirin." Style="{StaticResource Muted}" FontSize="11" Margin="0,8,0,0"/></StackPanel>
+      <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto"><StackPanel Margin="0,0,8,0">
+       <TextBlock Text="Kayıt aralığı (dakika)" Foreground="{StaticResource MutedBrush}" Margin="0,0,0,6"/>
+       <TextBox Text="{Binding IntervalText, UpdateSourceTrigger=PropertyChanged}" MaxLength="4" AutomationProperties.Name="Kayıt aralığı"/>
+       <WrapPanel Margin="0,7,0,0"><WrapPanel.Resources><Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}"><Setter Property="Padding" Value="8,5"/><Setter Property="FontSize" Value="11"/><Setter Property="Margin" Value="0,0,4,4"/><Setter Property="Command" Value="{Binding IntervalPresetCommand}"/></Style></WrapPanel.Resources><Button Content="1" CommandParameter="1"/><Button Content="5" CommandParameter="5"/><Button Content="10" CommandParameter="10"/><Button Content="15" CommandParameter="15"/><Button Content="30" CommandParameter="30"/><Button Content="60" CommandParameter="60"/></WrapPanel>
+       <TextBlock Text="1–1440 dakika · Varsayılan: 10" Style="{StaticResource Muted}" FontSize="11" Margin="0,4,0,14"/>
+       <TextBlock Text="Backup aralığı (dakika)" Foreground="{StaticResource MutedBrush}" Margin="0,0,0,6"/>
+       <TextBox Text="{Binding BackupIntervalText, UpdateSourceTrigger=PropertyChanged}" MaxLength="4"/>
+       <TextBlock Text="Yedek sayısı: 5 / 10 / 20 / 0 (sınırsız)" Style="{StaticResource Muted}" FontSize="11" Margin="0,14,0,6"/>
+       <TextBox Text="{Binding RetentionText, UpdateSourceTrigger=PropertyChanged}" MaxLength="2"/>
+       <TextBlock Text="Backup klasörü (tam yol)" Foreground="{StaticResource MutedBrush}" Margin="0,14,0,6"/>
+       <TextBox Text="{Binding BackupDirectory, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" MinHeight="55"/>
+       <Button Content="Klasör seç…" Command="{Binding BrowseBackupFolderCommand}" FontSize="11" Padding="10,7" Margin="0,7,0,12"/>
+       <CheckBox Content="Küçültünce sistem tepsisine al" IsChecked="{Binding MinimizeToTray}" FontSize="12"/>
+       <CheckBox Content="Tepsi bildirimlerini göster" IsChecked="{Binding ShowNotifications}" FontSize="12"/>
+      </StackPanel></ScrollViewer></Grid>
+     </TabItem>
+    </TabControl>
+   </Border>
+  </Grid>
+  <Border x:Name="StatusCard" Grid.Row="3" Margin="0,18,0,0" Padding="14,10" CornerRadius="7" Background="#162234">
+   <Grid><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions><StackPanel><TextBox Text="{Binding Status, Mode=OneWay}" IsReadOnly="True" TextWrapping="Wrap" MaxHeight="70" VerticalScrollBarVisibility="Auto" BorderThickness="0" Padding="0" Background="Transparent" Margin="0,0,12,3"/><TextBlock Text="{Binding ActivityText}" Foreground="{StaticResource MutedBrush}" FontSize="11"/></StackPanel><ProgressBar x:Name="ActivityProgress" Grid.Column="1" Width="132" Height="12" IsIndeterminate="{Binding IsBusy}" Foreground="{StaticResource AccentBrush}" Background="#29364A"/></Grid>
+  </Border>
+ </Grid>
+ </ScrollViewer>
+ </TabItem>
+ <TabItem Header="Yardım" DockPanel.Dock="Right"><local:HelpView x:Name="HelpPage"/></TabItem>
+ </TabControl>
+</Window>
+

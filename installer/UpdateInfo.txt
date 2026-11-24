@@ -1,0 +1,17 @@
+TIA AUTO SAVE MANAGER — V0.4.3 GÜNCELLEMESİ
+
+Bu küçük paket, mevcut Manager kurulumunu günceller. V20 ve V21 aynı uygulama içinde kendi Openness sürümleriyle algılanır. V20 yedekleri .zap20, V21 yedekleri .zap21 olarak oluşturulur.
+
+Kısayola yeniden basmak, zaten açık Manager penceresini gösterir; ikinci bir Manager başlatılmaz. Simge görünmese bile kısayoldan pencereye ulaşabilirsiniz. Windows Gezgini yeniden başladığında tepsi simgesi yeniden oluşturulur. Yanıt alınamazsa “tepsiden açın” demek yerine açık bir hata açıklaması gösterilir. Kurucu, eski sürümün “Uygulama zaten açık” penceresini de normal şekilde kapatabilir.
+
+Son yenilikler: Pencere açılışta ekranın kullanılabilir alanına ve DPI ölçeğine göre boyutlanır. Monitör/çözünürlük değiştiğinde yeniden ekrana sığdırılır. Yardım adımları kare numara rozetleriyle düzenlendi; her bölüm 01'den başlar. Kullanıcı adını bulma rehberi üç büyütülebilir ekran görüntüsüyle eklendi.
+
+Manager açıksa kurulum “Manager kapatılsın mı?” diye sorar. Evet derseniz normal kapanma isteği gönderilir ve bağlantı süreçlerinin bitmesi beklenir. Devam eden TIA işlemi zorla kesilmez; TIA Portal kapatılmaz. Kapanma 30 saniyede tamamlanmazsa işlem bitince kurulumu yeniden deneyin. Hayır seçerseniz güncelleme dosyaları değiştirilmez.
+
+Kurulumdan sonra Başlat menüsü veya masaüstündeki yeni kısayolu kullanın. Kullanıcı ayarları ve mevcut yedekler korunur. Otomatik işlemleri yeniden etkinleştirin.
+
+Bu paket .NET kurucularını içermez. Önceki tam Setup ile kurulmuş .NET Framework 4.8 ve .NET 8 Windows Desktop Runtime x64 (8.0.34 veya daha yeni 8.0 yaması) gerekir. Eksikse kurulum durur; tam Setup paketini kullanın.
+
+TIA Portal V20 kullanan bilgisayarda aynı sürümün Openness bileşeni de kurulu olmalıdır. V21 kurulumu gerekmez. Kullanıcının Siemens TIA Openness grup üyeliği etkin olmalıdır. Ayrıntılar uygulamadaki Yardım sekmesindedir.
+
+V20 bağlantısı, gerçek V20 bilgisayarında ilk kez kontrol edilmelidir. Önce ayrı bir test projesiyle Yenile → Bağlan → Save Now deneyin. TIA erişim iznini yeniden sorabilir.

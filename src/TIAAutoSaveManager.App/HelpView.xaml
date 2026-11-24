@@ -1,0 +1,74 @@
+<UserControl x:Class="TIAAutoSaveManager.App.HelpView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Foreground="{StaticResource TextBrush}">
+ <UserControl.Resources>
+  <Style x:Key="StepHeader" TargetType="ContentControl">
+   <Setter Property="Focusable" Value="False"/>
+   <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="ContentControl">
+    <Grid>
+     <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+     <Border Background="#19352F" BorderBrush="#2A534A" BorderThickness="1" CornerRadius="8" Width="40" Height="40" Margin="0,0,14,0" VerticalAlignment="Top">
+      <TextBlock Text="{TemplateBinding Tag}" Foreground="{StaticResource AccentBrush}" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+     </Border>
+     <TextBlock Grid.Column="1" Text="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}" Foreground="{StaticResource TextBrush}" FontSize="19" FontWeight="SemiBold" TextWrapping="Wrap" VerticalAlignment="Center"/>
+    </Grid>
+   </ControlTemplate></Setter.Value></Setter>
+  </Style>
+ </UserControl.Resources>
+ <ScrollViewer x:Name="HelpScroll" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+  <StackPanel MaxWidth="1100" Margin="24,22" HorizontalAlignment="Stretch">
+   <Grid><Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition/></Grid.ColumnDefinitions><Image Source="Assets/Logo.png" Width="64" Height="64" Margin="0,0,18,0"/><StackPanel Grid.Column="1"><TextBlock Text="Yardım ve ilk kurulum" FontSize="28" FontWeight="SemiBold"/><TextBlock Text="Ekran görüntüleriyle adım adım bağlantı, kayıt ve yedekleme rehberi" Style="{StaticResource Muted}" Margin="0,6,0,0"/></StackPanel></Grid>
+   <WrapPanel Margin="0,20,0,20"><Button Content="1. Bilgisayar ayarları" Click="GoSetup" Margin="0,0,8,8"/><Button Content="2. İlk kullanım" Click="GoUsage" Margin="0,0,8,8"/><Button Content="Yedeği geri açma" Click="GoRestore" Margin="0,0,8,8"/><Button Content="3. Sorun giderme" Click="GoTroubleshooting" Margin="0,0,8,8"/></WrapPanel>
+   <Border Style="{StaticResource Card}" Margin="0,0,0,18"><StackPanel><TextBlock Text="Başlamadan önce" FontSize="19" FontWeight="SemiBold"/><TextBlock Text="TIA Portal V20/V21 ve aynı sürümün Openness bileşeni, .NET Framework 4.8 ve .NET 8 Windows Desktop Runtime x64 kurulu olmalı. Manager klasörünü DLL’leri ve host alt klasörüyle birlikte kullanın. İlk denemeyi ayrı bir test projesinde yapın." Style="{StaticResource Muted}" Margin="0,10,0,0" LineHeight="22"/><TextBlock Text="Bu sayfa ayarları nasıl yapacağınızı anlatır. Hesap/grup değişikliğini Windows’ta siz veya sistem yöneticiniz uygular." Style="{StaticResource Muted}" Margin="0,9,0,0"/></StackPanel></Border>
+   <TextBlock x:Name="SetupSection" Text="1 / Bilgisayar ayarları" FontSize="22" FontWeight="SemiBold" Margin="0,6,0,18"/>
+   <ItemsControl x:Name="SetupSteps"><ItemsControl.ItemTemplate><DataTemplate><Border Style="{StaticResource Card}" Margin="0,0,0,18"><Grid x:Name="StepLayout" SizeChanged="StepLayoutSizeChanged">
+    <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="1.15*"/></Grid.ColumnDefinitions>
+    <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+    <StackPanel VerticalAlignment="Center">
+    <ContentControl Style="{StaticResource StepHeader}" Tag="{Binding Number}" Content="{Binding Title}"/>
+    <TextBlock Text="{Binding Description}" Style="{StaticResource Muted}" Margin="0,12,0,0" LineHeight="22"/>
+    </StackPanel>
+    <StackPanel Grid.Column="1" Margin="24,0,0,0">
+    <Border Background="#0A1019" CornerRadius="8" Padding="8"><Image Source="{Binding ImageUri}" Stretch="Uniform" MaxHeight="260" Cursor="Hand" MouseLeftButtonUp="OpenImage" ToolTip="Görseli büyütmek için tıklayın"/></Border>
+    <Button Content="Ekran görüntüsünü büyüt ↗" Click="OpenImageButton" HorizontalAlignment="Right" FontSize="12" Padding="12,9" Margin="0,12,0,0"/>
+    </StackPanel>
+   </Grid></Border></DataTemplate></ItemsControl.ItemTemplate></ItemsControl>
+   <Border Style="{StaticResource Card}" Margin="0,0,0,18"><StackPanel>
+    <ContentControl Style="{StaticResource StepHeader}" Tag="05" Content="Windows kullanıcı adınızı bulun"/>
+    <TextBlock Text="Başlat → kullanıcı simgesi → Hesap ayarlarını değiştir → Hesaplar / Bilgileriniz yolunu izleyin. Ekran görüntülerindeki utente / UTENTE örnek hesaptır; kendi bilgisayarınızdaki hesabı kullanın. Görselleri büyütmek için üzerlerine tıklayın." Style="{StaticResource Muted}" Margin="0,12,0,0" LineHeight="22"/>
+    <ItemsControl x:Name="UserNameScreenshots" HorizontalAlignment="Center" Margin="0,6,0,0">
+     <ItemsControl.ItemsPanel><ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate></ItemsControl.ItemsPanel>
+     <ItemsControl.ItemTemplate><DataTemplate>
+      <Button Click="OpenImageButton" Width="292" Margin="0,10,12,0" Padding="10" Background="#0A1019" HorizontalContentAlignment="Stretch" ToolTip="Ekran görüntüsünü büyüt">
+       <StackPanel><Image Source="{Binding ImageUri}" Height="180" Stretch="Uniform"/><TextBlock Text="{Binding Title}" Foreground="{StaticResource TextBrush}" FontWeight="SemiBold" FontSize="12" TextWrapping="Wrap" Margin="0,10,0,0"/><TextBlock Text="Büyüt ↗" Foreground="{StaticResource AccentBrush}" FontSize="11" Margin="0,5,0,0"/></StackPanel>
+      </Button>
+     </DataTemplate></ItemsControl.ItemTemplate>
+    </ItemsControl>
+    <TextBlock Text="Kesin oturum adını doğrulamak için Win + R → cmd → Enter açıp whoami yazın. Sonuç BİLGİSAYAR\kullanıcı veya ETKİALANI\kullanıcı biçimindedir. Hesap ayarlarında görünen ad farklı olabilir; gruba eklerken whoami sonucundaki tam hesabı kullanıp Adları Denetle ile doğrulayın. Ardından 03–04 adımlarını tamamlayın." Style="{StaticResource Muted}" Margin="0,14,0,0" LineHeight="22"/>
+   </StackPanel></Border>
+   <Border Style="{StaticResource Card}" BorderBrush="{StaticResource AccentBrush}" Margin="0,0,0,24"><StackPanel><ContentControl Style="{StaticResource StepHeader}" Tag="06" Content="Windows oturumunu yenileyin"/><TextBlock Text="Önce çalışmalarınızı kaydedin. Windows oturumunu tamamen kapatıp yeniden giriş yapın. Yalnızca Manager’ı veya TIA Portal’ı kapatıp açmak, yeni grup üyeliğini etkinleştirmek için yeterli değildir." Style="{StaticResource Muted}" Margin="0,10,0,0" LineHeight="22"/></StackPanel></Border>
+   <TextBlock x:Name="UsageSection" Text="2 / İlk kullanım" FontSize="22" FontWeight="SemiBold" Margin="0,6,0,18"/>
+   <Border Style="{StaticResource Card}" Margin="0,0,0,18"><StackPanel><ContentControl Style="{StaticResource StepHeader}" Tag="01" Content="TIA Portal’a bağlanın"/><TextBlock Text="V20/V21’de bir test projesi açın, Manager’da Yenile seçin. Listeden doğru proje ve PID’yi seçip Bağlan’a basın. TIA’nın Openness erişim istemini kontrol edip uygulamaya izin verin. Durum ‘Connected’ ve bağlı instance sayısı 1 olduğunda bağlantı kurulmuştur. ‘Detected’ yalnızca algılandığını gösterir." Style="{StaticResource Muted}" Margin="0,10,0,0" LineHeight="22"/><TextBlock Text="Uygulama güncellendiğinde host dosyasının yolu/hash’i değişebileceğinden TIA erişim onayını yeniden isteyebilir." Style="{StaticResource Muted}" Margin="0,10,0,0"/></StackPanel></Border>
+   <Border Style="{StaticResource Card}" Margin="0,0,0,18"><StackPanel><ContentControl Style="{StaticResource StepHeader}" Tag="02" Content="Save Now ve Auto Save"/><TextBlock Text="Save Now açık projeyi kendi konumuna kaydeder; ayrı bir backup dosyası oluşturmaz. Onay penceresindeki tam proje yolunu kontrol edin. Başarılı çağrıdan sonra Son Kayıt zamanı güncellenir." Style="{StaticResource Muted}" Margin="0,10,0,0" LineHeight="22"/><TextBlock Text="Otomatik kayıt için Yönetim → Ayarlar sekmesinde aralığı belirleyip Ayarları kaydet seçin. Sonra Otomatik sekmesinden seçili proje için Auto Save’i etkinleştirin. İlk kayıt tam aralık sonunda yapılır; geri sayımı izleyebilirsiniz." Style="{StaticResource Muted}" Margin="0,10,0,0" LineHeight="22"/><TextBlock Text="Save, TIA Portal’ın Undo/Redo geçmişini temizler. Her projeyi ayrı etkinleştirin; uygulama yeniden açıldığında otomatik işlemler kapalı başlar." Foreground="{StaticResource AccentBrush}" TextWrapping="Wrap" Margin="0,10,0,0" LineHeight="22"/></StackPanel></Border>
+   <Border Style="{StaticResource Card}" Margin="0,0,0,18"><StackPanel><ContentControl Style="{StaticResource StepHeader}" Tag="03" Content="Sürümlü Backup"/><TextBlock Text="Ayarlar sekmesinden kısa ve yazılabilir bir hedef seçin (ör. C:\TIA_Backups). Backup aralığını ve saklanacak yedek sayısını belirleyip kaydedin. Backup Now, önce Save yapar, ardından tarihli .zap20/.zap21 üretir. Otomatik Backup ayrı etkinleştirilir; Auto Save’den bağımsız bir sayacı vardır." Style="{StaticResource Muted}" Margin="0,10,0,0" LineHeight="22"/><TextBlock Text="Varsayılan hedef Belgeler\TIAAutoSaveManager\Backups altındadır. Gerçek hedefi Otomatik sekmesinde görebilir ve Yedek klasörünü aç ile inceleyebilirsiniz. Son 5/10/20 veya sınırsız için 0 seçilir. Yeni yedek doğrulanmadan eski yönetilen yedekler silinmez." Style="{StaticResource Muted}" Margin="0,10,0,0" LineHeight="22"/><TextBlock Text="İlk .zap21 dosyasını ayrı bir test konumuna TIA ile geri açıp kontrol edin. Başarısız .pending-* klasörü geçerli yedek değildir. Klasör ve dosya adında bilgisayarın yerel saati yyyyMMdd_HHmm biçiminde kullanılır (ör. 20261120_0835). Aynı dakikadaki ek yedeklere _02, _03 eklenir." Style="{StaticResource Muted}" Margin="0,10,0,0" LineHeight="22"/></StackPanel></Border>
+   <Border Style="{StaticResource Card}" Margin="0,0,0,24"><StackPanel><ContentControl Style="{StaticResource StepHeader}" Tag="04" Content="Pause, Resume ve sistem tepsisi"/><TextBlock Text="Pause yeni otomatik işleri duraklatır; başlamış API çağrısını zorla kesmez. Resume sayaçları tam aralıkla yeniden başlatır. Küçültme ayarı açıksa Manager sistem tepsisinde çalışır. Exit uygulamadan çıkar ve yeni otomatik işlem yapılmaz. Save veya Backup sürerken güvenli tamamlanmayı bekleyin." Style="{StaticResource Muted}" Margin="0,10,0,0" LineHeight="22"/></StackPanel></Border>
+   <Border x:Name="RestoreSection" Style="{StaticResource Card}" BorderBrush="{StaticResource AccentBrush}" Margin="0,0,0,24"><StackPanel>
+    <ContentControl Style="{StaticResource StepHeader}" Tag="05" Content="Yedeği geri açma (Retrieve)"/>
+    <TextBlock Text=".zap20 ve .zap21 sıkıştırılmış proje arşivleridir. Yedeği kaynak TIA sürümüyle geri açın. Aşağıdaki V21 örneğinde, V20 için .zap20 ve .ap20 kullanın. İlk açılışta TIA, arşivi çıkaracağı hedef klasörü sorar. ‘Select target directory’ kütüphane seçimi değildir. Çıkarma tamamlandıktan sonra proje açılır; daha sonra çıkarılan .ap21 dosyası normal şekilde kullanılabilir." Style="{StaticResource Muted}" Margin="0,10,0,0" LineHeight="22"/>
+    <TextBlock Text="1. Denemeyi ayrı bir TIA oturumunda, açık proje yokken yapın. Mevcut çalışmalarınızı kaydedin.&#x0a;2. Uzun adlı eski yedeğin yalnız .zap21 dosyasını kısa bir yere kopyalayın; örnek: C:\TIA_Test\b.zap21. Orijinal yedeği ve manifestini yerinde bırakın.&#x0a;3. Yeni ve boş bir hedef klasör oluşturun; örnek: C:\TIA_Test\R01. Başka bir .ap21 projesinin içini veya daha önce açılmış proje klasörünü hedef seçmeyin.&#x0a;4. TIA → Project → Open → Browse ile b.zap21 dosyasını seçin. ‘Select target directory’ penceresinde R01 klasörünü seçip ‘Select folder’ tıklayın.&#x0a;5. Aynı hedefi tekrar kullanmak yerine sonraki denemede boş R02 gibi yeni bir klasör seçin." Style="{StaticResource Muted}" Margin="0,12,0,0" LineHeight="24"/>
+    <TextBlock Text="‘Subfolder already exists’ uyarısında Yes, mevcut proje klasörünün içeriğini silip değiştirir. Var olan projeyi korumak için No seçin ve yeni boş hedef kullanın." Foreground="{StaticResource AccentBrush}" TextWrapping="Wrap" Margin="0,12,0,0" LineHeight="22"/>
+    <TextBlock Text="‘Retrieve failed — path too long’ geri açma yolunun uzunluğuyla ilgilidir. Arşiv dosyasının ve çıkarma hedefinin ikisini de kısa tutun. Bu hata tek başına arşivin bozuk olduğunu göstermez; açılış ve içerik doğrulaması ayrıca yapılmalıdır." Style="{StaticResource Muted}" Margin="0,10,0,0" LineHeight="22"/>
+   </StackPanel></Border>
+   <TextBlock x:Name="TroubleshootingSection" Text="3 / Sorun giderme" FontSize="22" FontWeight="SemiBold" Margin="0,6,0,18"/>
+   <Border Style="{StaticResource Card}"><StackPanel>
+    <TextBlock Text="Bağlanamıyorum / grup üyeliği uyarısı" FontWeight="SemiBold"/><TextBlock Text="Gruba TIA’yı çalıştıran doğru hesabın eklendiğini ve Windows oturumunun yenilendiğini kontrol edin. TIA erişim istemi başka pencerenin arkasında kalmış olabilir." Style="{StaticResource Muted}" Margin="0,6,0,16"/>
+    <TextBlock Text="Backup’ta yol çok uzun uyarısı" FontWeight="SemiBold"/><TextBlock Text="Ayarlar’dan C:\TIA_Backups gibi kısa bir hedef seçip kaydedin. Manager, Archive için 143 karakterlik güvenli tam yol kontrolü uygular; sığmayan hedefte kayıt/arşiv çağrısına geçmez." Style="{StaticResource Muted}" Margin="0,6,0,16"/>
+    <TextBlock Text="Bağlantı koptu / işlem sonucu bilinmiyor" FontWeight="SemiBold"/><TextBlock Text="TIA’da projeyi kontrol edin. Sonucu bilinmeyen kayıt otomatik tekrar edilmez. İşlemin bittiğini doğruladıktan sonra Manager’ı yeniden açıp doğru projeye bağlanın ve otomatik seçimleri yeniden yapın." Style="{StaticResource Muted}" Margin="0,6,0,16"/>
+    <TextBlock Text="Ayrıntılı hata kaydı" FontWeight="SemiBold"/><TextBlock Text="Yönetim ekranındaki Log klasörü düğmesini kullanın. Normal konum: %LOCALAPPDATA%\TIAAutoSaveManager\Logs. Manager ve Openness host kayıtları ayrı dosyalardadır." Style="{StaticResource Muted}" Margin="0,6,0,16"/>
+    <TextBlock><Hyperlink NavigateUri="https://docs.tia.siemens.cloud/r/en-us/v21/tia-portal-openness-api-for-automation-of-engineering-workflows/basics/installation/adding-users-to-the-siemens-tia-openness-user-group" RequestNavigate="OpenDocumentation" Foreground="{StaticResource AccentBrush}">Siemens V21 resmî grup üyeliği yönergesi ↗</Hyperlink></TextBlock>
+   </StackPanel></Border>
+  </StackPanel>
+ </ScrollViewer>
+</UserControl>
+
+
+
+

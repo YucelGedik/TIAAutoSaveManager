@@ -1,0 +1,18 @@
+TIA PORTAL AUTO SAVE MANAGER
+
+Bu kurulum uygulamayı, Başlat menüsü kısayolunu ve isteğe bağlı masaüstü kısayolunu yükler. Yönetici izni gerekir.
+
+.NET 8 Windows Desktop Runtime x64 ve .NET Framework 4.8 kontrol edilir. Eksik veya paket sürümünden eski .NET 8 Desktop Runtime, pakete dahil Microsoft kurucusuyla yüklenir. .NET Framework 4.8 veya daha yenisi zaten varsa yeniden kurulmaz. Hedef bilgisayarda internet gerekmez. Yeniden başlatma gerekirse kurulum duraklar; Windows'u yeniden başlatıp Setup'ı tekrar çalıştırın.
+
+Microsoft bileşenleri kendi lisans koşullarıyla sunulur:
+https://dotnet.microsoft.com/dotnet/terms
+https://dotnet.microsoft.com/download/dotnet-framework/net48
+Her bileşenin lisans ve bildirimleri değiştirilmemiş Microsoft kurucusunun içindedir.
+Kuruluma devam ederek bu bileşenlerin gerektiğinde kurulmasını kabul edersiniz.
+
+TIA Portal V20/V21 ve aynı sürümün Openness bileşeni, lisanslı Siemens kurulum medyasından ayrıca kurulmalıdır. Bu setup Siemens yazılımını veya DLL'lerini içermez. Siemens TIA Openness kullanıcı grubu ayarını Yardım sekmesindeki adımlarla tamamlayın.
+
+Manager açıksa kurulum kapatılması için onay ister. Onayla normal kapanma isteği gönderilir; kayıt/yedekleme ve bağlantıların bitmesi beklenir. 30 saniyede bitmezse işlem tamamlandıktan sonra tekrar deneyin. Süreçler zorla kapatılmaz; TIA Portal açık kalır. TIA erişim onayını yeniden isteyebilir.
+
+Uygulamayı kaldırmak projelerinizi, yedeklerinizi ve kullanıcı ayarlarınızı silmez. Paylaşılan .NET bileşenleri de kaldırılmaz.
+

@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <OpennessDirectory Condition="'$(OpennessDirectory)' == ''">$(Registry:HKEY_LOCAL_MACHINE\SOFTWARE\Siemens\Automation\Openness\21.0\PublicAPI\21.0.0.0\net48@Siemens.Engineering.Base)</OpennessDirectory>
+    <OpennessBaseAssembly Condition="Exists('$(OpennessDirectory)')">$(OpennessDirectory)</OpennessBaseAssembly>
+    <OpennessBaseAssembly Condition="'$(OpennessBaseAssembly)' == ''">C:\Program Files\Siemens\Automation\Portal V21\PublicAPI\V21\net48\Siemens.Engineering.Base.dll</OpennessBaseAssembly>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../TIAAutoSaveManager.Contracts/TIAAutoSaveManager.Contracts.csproj" />
+    <Reference Include="Siemens.Engineering.Base"><HintPath>$(OpennessBaseAssembly)</HintPath><Private>false</Private></Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <PackageReference Include="Serilog" Version="4.3.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
+  </ItemGroup>
+  <Target Name="CheckOpennessSdk" BeforeTargets="ResolveReferences" Condition="!Exists('$(OpennessBaseAssembly)')">
+    <Error Text="TIA Portal V21 Openness SDK bulunamadı. /p:OpennessBaseAssembly=...\net48\Siemens.Engineering.Base.dll belirtin. Sahte SDK kullanılmaz." />
+  </Target>
+</Project>

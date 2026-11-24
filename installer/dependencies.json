@@ -1,0 +1,25 @@
+{
+  "desktopVersion": "8.0.34",
+  "desktopMinPatch": 34,
+  "files": [
+    {
+      "name": "innosetup-6.7.3.exe",
+      "url": "https://github.com/jrsoftware/issrc/releases/download/is-6_7_3/innosetup-6.7.3.exe",
+      "sha256": "9C73C3BAE7ED48D44112A0F48E66742C00090BDB5BEF71D9D3C056C66E97B732",
+      "publisher": "Pyrsys B.V."
+    },
+    {
+      "name": "windowsdesktop-runtime-8.0.34-win-x64.exe",
+      "url": "https://builds.dotnet.microsoft.com/dotnet/WindowsDesktop/8.0.34/windowsdesktop-runtime-8.0.34-win-x64.exe",
+      "sha256": "37AA8A02ACC1973DDD7E3DE993A02007CCEF26B48FA35B09D087FA8AB4602795",
+      "sha512": "e5d9049668425fdf88029005b33b563cd4793d5afc6841c9b9e1622119a06466536a60cb09708e0b6d58457c1c0c49ac415decba47ec7a06ebdf828aff903f62",
+      "publisher": "Microsoft Corporation"
+    },
+    {
+      "name": "ndp48-x86-x64-allos-enu.exe",
+      "url": "https://go.microsoft.com/fwlink/?linkid=2088631",
+      "sha256": "0A3A390C47E639D0F7FC65B21195FEE6B7F65B066F80F70C60FAB191D14B7E40",
+      "publisher": "Microsoft Corporation"
+    }
+  ]
+}
